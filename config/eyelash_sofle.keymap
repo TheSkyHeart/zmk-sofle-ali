@@ -76,11 +76,11 @@
 
         Nav {
             bindings = <
-&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &trans     &trans    &trans     &trans  &trans
-&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &kp HOME   &kp UP    &kp END    &trans  &trans
-&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans    &trans  &kp CAPS  &kp LEFT   &kp DOWN  &kp RIGHT  &trans  &trans
-&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &kp PG_UP  &trans    &kp PG_DN  &trans  &trans
-&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &kp BSPC   &kp DEL   &trans     &trans
+&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &trans     &trans    &trans     &trans          &trans
+&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &kp HOME   &kp UP    &kp END    &trans          &trans
+&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans    &trans  &kp CAPS  &kp LEFT   &kp DOWN  &kp RIGHT  &trans          &trans
+&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &kp PG_UP  &trans    &kp PG_DN  &trans          &trans
+&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans    &kp BSPC   &kp DEL   &trans     &studio_unlock
             >;
         };
 
