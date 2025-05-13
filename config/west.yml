@@ -8,6 +8,8 @@ manifest:
       # - https://docs.zephyrproject.org/3.5.0/develop/west/manifest.html#projects
     - name: gpeye
       url-base: https://github.com/GPeye
+    - name: urob
+      url-base: https://github.com/urob
   projects:
     - name: eyelash_sofle
       url: https://github.com/a741725193/zmk-sofle
@@ -15,6 +17,10 @@ manifest:
     - name: mario-peripheral-animation
       remote: gpeye
       revision: main 
+      # Urob's zmk helpers that contain key position defines
+    - name: zmk-helpers
+      remote: urob
+      revision: v2 # this will eventually become main
     - name: zmk
       remote: zmkfirmware
       revision: main
