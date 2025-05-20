@@ -38,7 +38,7 @@
         tap-ms = <100>;
     };
 
-/ {
+
     behaviors {
 
         // Positional Homerow mods
@@ -124,7 +124,6 @@
         };
     };
 
-/ {
 
     keymap {
         compatible = "zmk,keymap";
