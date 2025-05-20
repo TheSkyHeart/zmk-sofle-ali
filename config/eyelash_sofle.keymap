@@ -34,41 +34,83 @@
 
         tap-ms = <100>;
     };
+#define HM_TAPPING_TERM 300
+#define HM_TAPPING_TERM_FAST 200
+#define HM_PRIOR_IDLE 150
+
+/ {
 
     behaviors {
-        td0: td0 {
-            compatible = "zmk,behavior-tap-dance";
-            display-name = "Shift/Caps Lock Tap Dance";
-            #binding-cells = <0>;
-            bindings = <&kp LEFT_SHIFT>, <&kp CAPS>;
-        };
 
-        hrm_left: hrm_left {
+        // Positional Homerow mods
+        // Homerow mods that prevent accidental activations when rolling keys,
+        // such as when typing `st` or `ne` on colemak-dh layouts or `as` on
+        // qwerty.
+        //
+        // Works by only allowing a mod to activate within tapping-term if
+        // it's on the opposite side of the keyboard or on the same side thumb
+        // keys.
+
+        // Further optimization using urob's timerless homerow mods method:
+        // https://github.com/urob/zmk-config#timeless-homerow-mods
+        hm_l: homerow_mods_left {
             compatible = "zmk,behavior-hold-tap";
-            label = "HRM_LEFT";
-            bindings = <&kp>, <&kp>;
-
             #binding-cells = <2>;
+            bindings = <&kp>,  <&kp>;
+
             flavor = "balanced";
-            tapping-term-ms = <250>;
-            quick-tap-ms = <175>;
-            require-prior-idle-ms = <175>;
-            hold-trigger-on-release;
+            tapping-term-ms = <HM_TAPPING_TERM>;
+            quick-tap-ms = <175>;                // repeat on tap-into-hold
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
             hold-trigger-key-positions = <6 7 20 21 22 35 36 45 46 47 8 9 10 11 12 23 24 25 37 38 19 34 58 32 33 48 49 50 51 63 62 61 60 59>;
+            hold-trigger-on-release;
         };
 
-        hrm_right: hrm_right {
+        hm_r: homerow_mods_right {
             compatible = "zmk,behavior-hold-tap";
-            label = "HRM_RIGHT";
+            #binding-cells = <2>;
             bindings = <&kp>, <&kp>;
 
-            #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <250>;
+            tapping-term-ms = <HM_TAPPING_TERM>;
             quick-tap-ms = <175>;
-            require-prior-idle-ms = <175>;
-            hold-trigger-on-release;
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
             hold-trigger-key-positions = <0 1 2 3 4 5 13 14 15 16 17 18 28 29 30 31 42 43 44 52 57 56 55 54 53 41 40 27 26 39>;
+            hold-trigger-on-release;
+        };
+
+
+        // Positional Homerow mods for shift
+        // Use faster tapping term and disable some features that may
+        // cause false negatives.
+        hm_shift_l: hm_shift_l {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <HM_TAPPING_TERM_FAST>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
+            hold-trigger-key-positions = <6 7 20 21 22 35 36 45 46 47 8 9 10 11 12 23 24 25 37 38 19 34 58 32 33 48 49 50 51 63 62 61 60 59>;
+            // hold-trigger-on-release;
+        };
+
+        hm_shift_r: hm_shift_r {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <HM_TAPPING_TERM_FAST>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <HM_PRIOR_IDLE>;
+
+            hold-trigger-key-positions = <0 1 2 3 4 5 13 14 15 16 17 18 28 29 30 31 42 43 44 52 57 56 55 54 53 41 40 27 26 39>;
+            // hold-trigger-on-release;
         };
 
         layer_tap: layer_tap {
@@ -82,6 +124,8 @@
             tapping-term-ms = <280>;
         };
     };
+};
+
 
     keymap {
         compatible = "zmk,keymap";
@@ -90,7 +134,7 @@
             bindings = <
 &kp ESC        &kp N1                &kp N2            &kp N3             &kp N4             &kp N5         &kp UP_ARROW     &kp N6       &kp N7              &kp N8              &kp N9             &kp N0                          &kp ESC
 &kp TAB        &kp Q                 &kp W             &kp E              &kp R              &kp T          &kp DOWN_ARROW   &kp Y        &kp U               &kp I               &kp O              &kp P                           &kp BSLH
-&kp BACKSPACE  &hrm_left LEFT_GUI A  &hrm_left LALT S  &hrm_left LCTRL D  &hrm_left LSHFT F  &kp G          &kp LEFT_ARROW   &kp H        &hrm_right LSHFT J  &hrm_right RCTRL K  &hrm_right RALT L  &hrm_right RIGHT_GUI SEMICOLON  &kp APOS
+&kp BACKSPACE  &hm_l LEFT_GUI A  &hm_l LALT S  &hm_l LCTRL D  &hm_shift_l LSHFT F  &kp G          &kp LEFT_ARROW   &kp H        &hm_shift_r LSHFT J  &hm_r RCTRL K  &hm_r RALT L  &hm_r RIGHT_GUI SEMICOLON  &kp APOS
 &kp LSHFT      &kp Z                 &kp X             &kp C              &kp V              &kp B          &kp RIGHT_ARROW  &kp N        &kp M               &kp COMMA           &kp DOT            &kp FSLH                        &kp RIGHT_SHIFT
 &kp C_MUTE     &kp LEFT_GUI          &kp LEFT_ALT      &kp LCTRL          &mo 3              &lt 1 SPACE    &kp ENTER        &lt 1 ENTER  &mo 4               &kp RIGHT_CONTROL   &mo 2              &kp DELETE
             >;
