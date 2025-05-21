@@ -30,13 +30,6 @@
 };
 
 / {
-    scroll_encoder: scroll_encoder {
-        compatible = "zmk,behavior-sensor-rotate";
-        #sensor-binding-cells = <0>;
-        bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-
-        tap-ms = <100>;
-    };
 
     behaviors {
         // Positional Homerow mods
@@ -76,9 +69,6 @@
             hold-trigger-on-release;
         };
 
-        // Positional Homerow mods for shift
-        // Use faster tapping term and disable some features that may
-        // cause false negatives.
 
         layer_tap: layer_tap {
             compatible = "zmk,behavior-hold-tap";
@@ -90,6 +80,15 @@
             flavor = "tap-preferred";
             tapping-term-ms = <280>;
         };
+
+          scroll_encoder: scroll_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+
+            tap-ms = <100>;
+        };
+
     };
 
     keymap {
